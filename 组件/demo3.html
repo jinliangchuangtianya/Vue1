@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+    	<!--自定义组件-->
+    	<custom-select btn-value="搜索" :list="list1"></custom-select>
+    	<custom-select btn-value="查询" :list="list2"></custom-select>
+    </div>
+    <script>
+    	//虚拟数据
+    	var data = {
+    		list1 : ["北京", "上海", "广州"],
+    		list2 : ["2017-01-01", "2017-06-16", "2017-10-23"],
+    	}
+    	//注册组件
+		Vue.component('customSelect', {	   //父组件
+			props : ['btnValue', 'list'],
+			data : function(){
+				return {
+					selectedShow : false
+				}
+			},
+			template : `<div>
+							<input type="text" @click="selectedShow = !selectedShow" />
+    						<input type="button" :value="btnValue" />
+    						<custom-list v-show="selectedShow" :list="list"></custom-list>
+						</div>`
+		})
+		Vue.component('customList', {      //子组件
+			props : ["list"],
+			template : `<ul>
+							<li v-for=" item in list ">{{item}}</li>
+						</ul>`
+		})
+		new Vue({
+	       	el : '#app',
+	       	data : data
+	    })
+		
+    </script>
+</body>
+</html>

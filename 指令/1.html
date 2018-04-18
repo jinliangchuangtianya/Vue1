@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<body>
+    <div id="demo">
+    	<span v-bind:myId="id">{{message}}</span>
+    </div>
+    <script>
+        let data = {
+            message : "hello Vue",
+            id : 123
+        }
+        var vm = new Vue({
+            el : "#demo",
+            data : data
+        })
+    </script>
+</body>
+</html>

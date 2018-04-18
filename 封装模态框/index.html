@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			p,h4{
+				margin: 0;
+			}
+			.modal{
+				width: 500px;
+				background: #fff;
+				border: 1px solid rgba(0, 0, 0, .2);
+				border-radius: 6px;
+				box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+			}
+			.modal-header{
+				padding: 15px;
+				border-bottom: 1px solid #e5e5e5;
+			}
+			.modal-content div{
+				padding: 20px;
+			}
+			.modal-footer{
+				padding: 15px;
+				text-align: right;
+				border-top: 1px solid #E5E5E5;
+			}
+			.btn{
+				padding: 5px 15px;
+				border: none;
+				outline: none;
+			}
+			.blue{
+				color: #fff;
+				background: #39f;
+				border-color: #39f;
+			}
+		</style>
+		<script src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<my-modal my-title="提醒">
+				<ul slot="modal-content">
+					<li v-for=" item in list ">{{item}}</li>
+				</ul>
+				<div slot="modal-footer">
+					<span>返回</span>
+				</div>
+			</my-modal>
+			<my-modal  @on-ok="ok"  @on-cancel="cancel"></my-modal>
+		</div>
+		<script>
+			Vue.component('myModal', {
+				props : {
+					myTitle : {
+						type : String,
+						default : '这是标题'
+					}
+				},
+				template : `
+								<div class="modal">
+									<div class="modal-header">
+										<h4>{{myTitle}}</h4>
+									</div>
+									<div class="modal-content">
+										<slot name="modal-content">
+											<div>在这里添加内容</div>
+										</slot>
+									</div>
+									<div class="modal-footer">
+									<slot name="modal-footer">
+										<input type="button" value="确定" class="btn blue" @click="okHandle" />
+										<input type="button" value="取消" class="btn" @click="cancelHandel" />
+									</slot>
+									</div>
+								</div>
+							`,
+				methods : {
+					okHandle(){
+						this.$emit('on-ok');
+					},
+					cancelHandel(){
+						this.$emit('on-cancel');
+					}
+				}
+			})
+			var list = [..."abcd"]
+			new Vue({
+				el : '#app',
+				data : {
+					list : list
+				},
+				methods : {
+					ok(){
+						alert('监听确定');
+					},
+					cancel(){
+						alert('监听取消');
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

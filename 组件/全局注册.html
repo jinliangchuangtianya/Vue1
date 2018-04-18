@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+    	<!--自定义列表1-->
+    	<custom-select></custom-select>
+    </div>
+    <div id="demo">
+    	 <custom-select></custom-select>
+    </div>
+   
+    <script>
+    	//注册全局组件
+    	Vue.component('customSelect', {   //父组件
+    		template : `<div>
+    						<input type="text" />
+       						<input type="button" value="查询" />
+       						<custom-list></custom-list>
+    					</div>`
+    	})
+    	Vue.component('customList', {     //子组件
+    		template : `<ul>					
+    						<li>1111</li>
+    						<li>2222</li>
+    						<li>3333</li>
+    					</ul>`
+    	})
+    	
+       new Vue({
+       	el : '#app'
+       })
+       new Vue({
+       	el : '#demo'
+       })
+    </script>
+</body>
+</html>

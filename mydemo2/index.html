@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<my-select :list="list1" btn-value="搜索"></my-select>
+			<my-select :list="list2" btn-value="查询"></my-select>
+		</div>
+	</body>
+	<script>
+		//定义数据
+		var data = {
+			list1 : ["北京", "上海", "广州"],
+			list2 : ["2017-01-01", "2017-05-05", "2017-10-10"]
+		}
+		//定义组件
+		Vue.component('mySelect', {
+			data : function(){
+				return {
+					selectShow : false,
+					val : ''
+				}
+			},
+			props : ["list", "btnValue"],
+			template : `
+						<div>
+							<input type="text" @click="selectShow = !selectShow" :value="val" />
+							<input type="button" :value="btnValue" />
+							<my-list v-show="selectShow" :list="list" @zdysj="changeValue"></my-list>
+						</div>
+						`,
+			methods : {
+				changeValue : function(value){
+					this.val = value;
+					this.selectShow = false;
+				}
+			}
+		})
+		Vue.component('myList', {
+			props : ["list"],
+			template : `
+						<ul>
+							<li v-for="item in list" @click="selectChange(item)">{{item}}</li>
+						</ul>
+						`,
+			methods : {
+				selectChange : function(todo){
+					this.$emit('zdysj', todo);
+				}
+			}
+		})
+		new Vue({
+			el : '#app',
+			data : data
+		});
+	</script>
+</html>

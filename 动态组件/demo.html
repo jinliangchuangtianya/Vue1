@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+    	<input type="button" value="切换第1个组件" @click="changeTmp(1)" />
+    	<input type="button" value="切换第2个组件" @click="changeTmp(2)" />
+    	<input type="button" value="切换第3个组件" @click="changeTmp(3)" />
+    	<keep-alive>
+    		<component :is="mytmp"></component>
+    	</keep-alive>
+    </div>
+    <script>
+    	var tmp1 = Vue.component('tmp1', {
+    		template : `
+    					<div @click="addBg">我是第1个组件</div>
+    					`,
+    		methods : {
+    			addBg(ev){
+    				ev.target.style.background = 'red';
+    			}
+    		}
+    	});
+    	var tmp2 = Vue.component('tmp2', {
+    		template : `
+    					<div>我是第2个组件</div>
+    					`
+    	});
+    	var tmp3 = Vue.component('tmp2', {
+    		template : `
+    					<div>我是第3个组件</div>
+    					`
+    	});
+       new Vue({
+       	el : '#app',
+       	data : {
+       		mytmp : tmp1
+       	},
+       	methods : {
+       		changeTmp(index){
+       			if(index === 1){
+       				this.mytmp = tmp1;
+       			}
+       			else if(index === 2){
+       				this.mytmp = tmp2;
+       			}
+       			else if(index === 3){
+       				this.mytmp = tmp3;
+       			}
+       		}
+       	}
+       })
+    </script>
+</body>
+</html>

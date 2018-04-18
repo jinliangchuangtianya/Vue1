@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+    	<!--自定义列表1-->
+    	<custom-select btn-value="搜索" value="aaa"></custom-select>
+    	<custom-select btn-value="查询" value="bbb"></custom-select>
+    	
+    </div>
+    <script>
+
+       new Vue({
+       	el : '#app',
+       	components : {
+       		"customSelect" : {
+       			data : function(){   //组件中的data必须是函数
+       				return {
+			       	   selectedShow : false
+			       };
+       			},
+       			props : ["btnValue", "value"],
+       			template : `<div>
+       							<input type="text" @focus="selectedShow = !selectedShow" />
+       							<input type="button" :value="btnValue" />
+						    	<ul v-show="selectedShow">
+						    		<li>{{value}}</li>
+						    		<li>222</li>
+						    		<li>333</li>
+						    	</ul>
+						    </div>`
+	       					
+       		}
+       	}
+       })
+      
+    </script>
+</body>
+</html>

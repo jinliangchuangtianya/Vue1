@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+    	.bg{
+    		background: yellow;
+    	}
+    </style>
+    <script src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<body>
+    <div id="demo" :myattr="abc">
+    </div>
+    <script>
+        let data = {
+            html : "<p>hello Vue</p>",
+            abc : 1
+        }
+        var vm = new Vue({
+            el : "#demo",
+            data : data,
+            render : function(createElement){
+            	return createElement(
+            		"ul",
+            		{
+            			class : {bg:true},
+            			style : {'font-size' : '50px'},
+            			attrs :{'abc' : 'hello', 'data-attr' : 'hi', 'id' : 'myId'},
+            			domProps : {
+            				innerHTML : "<li>我是HTML</li>"
+            			},
+            			on : {'click':function(){
+            				alert(1);
+            			}}
+            		},
+            		[
+            			createElement("li", 1),
+            			createElement("li", 2),
+            			createElement("li", 3)
+            		]
+            	)
+            }
+        })
+    </script>
+</body>
+</html>

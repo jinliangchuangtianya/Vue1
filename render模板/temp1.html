@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<body>
+    <div id="demo" :myattr="abc">
+    </div>
+    <script>
+        let data = {
+            html : "<p>hello Vue</p>",
+            abc : 1
+        }
+        var vm = new Vue({
+            el : "#demo",
+            data : data,
+            render : function(createElement){
+            	return createElement(
+            		"ul",
+            		[
+            			createElement("li", 1),
+            			createElement("li", 2),
+            			createElement("li", 3)
+            		]
+            	)
+            }
+        })
+    </script>
+</body>
+</html>

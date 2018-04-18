@@ -1,0 +1,73 @@
+ul{
+	margin: 0;
+	padding: 0;
+}
+li{
+	list-style: none;
+	margin: 0;
+}
+a{
+	text-decoration: none;
+	color: #999;
+}
+.main{
+	width: 500px;
+}
+.task-input{
+	width: 500px;
+	height: 25px;
+}
+.task-count{
+	overflow: hidden;
+	width: 500px;
+	margin: 10px 0;
+}
+.task-count li{
+	float: left;
+	width: 150px;
+	font-size: 14px;
+	line-height: 20px;
+	color: #FF0000;
+}
+.task-count li.active{
+	width: 350px;
+	text-align: right;
+}
+.task-count li a{
+	display: inline-block;
+	padding: 0 10px;
+	border: 1px solid #999;
+	font-size: 12px;
+}
+.tasks{
+	width: 500px;
+	background: white;
+	font-size: 14px;
+}
+.todo button, .edit{
+	display: none;
+}
+.todo-list li{
+	line-height: 30px;
+	border-top: 1px solid #ccc;
+}
+.todo-list li button{
+	float: right;
+	margin-top: 10px;
+}
+.no-task-tip{
+	line-height: 30px;
+}
+.completed label{
+	text-decoration: line-through;
+	color: #CCCCCC;
+}
+
+.editing>div{
+	display: none;
+}
+.editing>.edit{
+	display: block;
+	width: 100%;
+	line-height: 22px;
+}

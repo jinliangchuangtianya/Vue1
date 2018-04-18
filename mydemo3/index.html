@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			ul{
+				padding: 0;
+				margin: 0;
+				list-style: none;
+			}
+			.tree-menu{
+				width: 360px;
+				height: 100%;
+				padding: 0 12px;
+				border-right: 1px solid #e6e9f0;
+			}
+			.tree-menu-comm span{
+				display: block;
+				font-size: 12px;
+				position: relative;
+			}
+			.treeContro .ico{
+				position: absolute;
+				left: -13px;
+				top: 3px;
+				width: 15px;
+				height: 17px;
+				background: url(icon.png) no-repeat 0px -18px;
+				opacity: .8;
+			}
+			.treeTitle .ico{
+				position: absolute;
+				left: -13px;
+				top: 3px;
+				width: 15px;
+				height: 17px;
+				background: url(icon.png) no-repeat 0px 0px;
+				opacity: .8;
+			}
+			.tree-menu-comm span strong{
+				display: block;
+				width: 82%;
+				position: relative;
+				line-height: 22px;
+				padding: 2px 0;
+				padding-left: 5px;
+				color: #161719;
+				font-weight: normal;
+			}
+			.tree-nav{
+				background: #e7f2fe;
+				border: 1px solid #bfdaf4;
+				padding-left: 14px;
+				margin-left: 0;
+			}
+			.treeTitle{
+				border: 1px solid #FFF;
+				margin-top: 1px;
+			}
+			.tree-contro-none .ico{
+				background-position: -999px -99px;
+			}
+		</style>
+		<script src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<!--<div class="tree-menu-comm tree-menu">
+				<ul>
+					<li>
+						<div class="tree-contro" style="padding-left: 16px;">
+							<span>
+								<strong>目录</strong>
+								<i class="ico"></i>
+							</span>
+						</div>
+						<ul>
+							<li>
+								<div class="tree-title" style="padding-left: 32px;">
+									<span>
+										<strong>我的音乐</strong>
+										<i class="ico"></i>
+									</span>
+								</div>
+								<ul>
+									<li>
+										<div class="tree-title" style="padding-left: 48px;">
+											<span>
+												<strong>周杰伦</strong>
+												<i class="ico"></i>
+											</span>
+										</div>
+										<ul>
+											<li>
+												<div class="tree-title tree-contro-none" style="padding-left: 64px;">
+													<span>
+														<strong>发如雪</strong>
+														<i class="ico"></i>
+													</span>
+												</div>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<div class="tree-title" style="padding-left: 48px;">
+											<span>
+												<strong>王杰</strong>
+												<i class="ico"></i>
+											</span>
+										</div>
+										<ul>
+											<li>
+												<div class="tree-title tree-contro-none" style="padding-left: 64px;">
+													<span>
+														<strong>一场游戏一场梦</strong>
+														<i class="ico"></i>
+													</span>
+												</div>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<div class="tree-title tree-contro-none" style="padding-left: 32px;">
+									<span>
+										<strong>我的照片</strong>
+										<i class="ico"></i>
+									</span>
+								</div>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>-->
+			<m-tree :data="list"></m-tree>
+		</div>
+		<script type="text/javascript">
+			var data = [
+				{
+					title : "目录",
+					children : [
+						{
+							title : "音乐",
+							children : [
+								{
+									title : "周杰伦",
+									children : [
+										{
+											title : "发如雪",
+										},
+										{
+											title : "双节棍"
+										}
+									]
+								},
+								{
+									title : "王杰",
+									children : [
+										{
+											title : "一场游戏一场梦",
+										},
+										{
+											title : "爱情杀手"
+										}
+									]
+								}
+							]
+						},
+						{
+							title : "我的文件"
+						}
+					]
+				}
+			]
+			Vue.component('mTreeList', {
+				props : {
+					data : {
+						type : Array,
+						default : []
+					},
+					num : {
+						type : Number,
+						default : 0
+					}
+				},
+				computed : {
+					countNum(){
+						var c = this.num;
+						return ++c;
+					},
+					paddingLeft(){
+						return {
+							"padding-left" : this.countNum * 16 + 'px'
+						}
+					}
+				},
+				template : `
+							<ul>
+								<li v-for="item in data">
+									<div :class="{treeContro : item.children}" :style="[paddingLeft]">
+										<span>
+											<strong>{{item.title}}</strong>
+											<i class="ico"></i>
+										</span>
+									</div>
+									<m-tree-list v-if="item.children" :data="item.children" :num="countNum"></m-tree-list>
+								<li>
+							</ul>
+							`
+			})
+			Vue.component('mTree', {
+				props : {
+					data : {
+						type : Array,
+						default : []
+					}
+				},
+				template : `
+							<div class="tree-menu-comm tree-menu">
+								<m-tree-list :data="data"></m-tree-list>
+							</div>
+							`
+			})
+			new Vue({
+				el : '#app',
+				data : {
+					list : data　
+				}
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+    	<h2>外部组件中使用了count</h2>
+    	<p>{{count}}</p>
+    	<!--自定义列表1-->
+    	<h2>内部的组件</h2>
+    	<my-tamplate :count="count" @inter-change="interDataChange"></my-tamplate>   <!--自定义事件不能大写-->
+    </div>
+    <script>
+       Vue.component('my-tamplate', {
+       		props : {
+       			count : {
+       				validator : function(value){    //自定义验证规则
+       					console.log(value);
+       					return value > 10;           //必须有return true成功 false失败 
+       				}
+       			}
+       		},
+       		data : function(){
+       			return {
+       				interCount : this.count    //将外部传过来的值作为局部组件中的初始值
+       			}
+       		},
+       		template : `
+       						<div>
+	       						<input type="button" value="改变count的值" @click="changeCount" />
+	       						{{interCount}}
+       						</div>
+       					`,
+       		methods : {
+       			changeCount : function(){
+       				this.interCount ++;
+       				//告诉父级内部数据改变了
+       				this.$emit('inter-change', this.interCount);
+       			}
+       		}
+       })
+       new Vue({
+       		el : '#app',
+       		data : {
+       			count : 20
+       		},
+       		methods : {
+       			interDataChange : function(value){
+       				//子组件的数据发生改变
+       				this.count = value;   //改变父组件中的数据
+       			}
+       		}
+       })
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="css/app.css" />
+		<script src="js/jquery-2.1.1.js"></script>
+		<script src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+		<script>
+			$(function(){
+				$('.todo-list').delegate('li', 'mouseover', function(){
+					$(this).find('button').show();
+				})
+				$('.todo-list').delegate('li', 'mouseout', function(){
+					$(this).find('button').hide();
+				})
+			})
+		</script>
+	</head>
+	<body style="background: #f2f2f2;">
+		<div class="main">
+			<h3>添加任务</h3>
+			<input class="task-input" placeholder="请添加任务，按回车即可添加" type="text" v-on:keyup.13="addTodo(123, $event)" v-model="todo" />
+			<ul class="task-count" v-show="list.length">
+				<li>
+					{{nocheckedLength}}个未完成任务</li>
+				<li class="active">
+					<a href="#all" calss="active">所有任务</a>
+					<a href="#unfinished">未完成的任务</a>
+					<a href="#finished">完成的任务</a>
+				</li>
+			</ul>
+			<h3>任务列表</h3>
+			<div class="tasks">
+				<span class="no-task-tip" v-show="!list.length">还没有添加任何任务</span>
+				<ul class="todo-list">
+					<li class="todo" :class="{completed : item.isChecked, editing : item === edtorTodos}" v-for=" item in filteredList ">
+						<div class="view">
+							<input type="checkbox" class="toggle" v-model="item.isChecked" />
+							<label @dblclick="edtorTodo(item)">{{item.title}}</label>
+							<button class="distroy" @click="removeTodo(item)">X</button>
+						</div>
+						<input type="text" class="edit" v-focus="item === edtorTodos" v-model="item.title" @blur="edtorTodos=''" @keyup.13="edtorTodos=''" @keyup.esc="cansleTodo(item)" />
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script src="js/app.js"></script>
+	</body>
+</html>
